@@ -1,0 +1,101 @@
+  <section class="intro">
+    <h1>Sube una fórmula estructural y descubre qué molécula es</h1>
+    <p>Funciona con dibujos 2D como los de Wikipedia o PubChem.</p>
+  </section>
+
+  <section
+    class="muestra"
+    [class.muestra--activa]="arrastrando()"
+    [class.muestra--cargada]="vistaPrevia()"
+    aria-label="Zona para subir la imagen"
+    (dragover)="alArrastrarEncima($event)"
+    (dragleave)="alSalirArrastrando($event)"
+    (drop)="alSoltar($event)"
+  >
+    @if (vistaPrevia(); as url) {
+      <figure class="muestra__placa">
+        <img [src]="url" [alt]="'Imagen subida: ' + nombreArchivo()" />
+      </figure>
+      <div class="muestra__texto">
+        <p class="muestra__titulo">{{ nombreArchivo() }}</p>
+        <p class="muestra__ayuda">Suelta otra imagen aquí para analizarla.</p>
+        <button type="button" class="boton boton--secundario" (click)="selector.click()">Cambiar imagen</button>
+      </div>
+    } @else {
+      <svg class="anillo" viewBox="0 0 120 120" aria-hidden="true">
+        <path class="anillo__hexagono" d="M60 16 98.1 38v44L60 104 21.9 82V38Z" />
+        <path class="anillo__doble" d="M64.5 27.6 85.8 39.9" />
+        <path class="anillo__doble" d="M85.8 80.1 64.5 92.4" />
+        <path class="anillo__doble" d="M29.7 72.3V47.7" />
+      </svg>
+      <div class="muestra__texto">
+        <p class="muestra__titulo">Arrastra aquí la imagen</p>
+        <p class="muestra__ayuda">O elígela desde tu equipo. PNG o JPG, hasta 10 MB.</p>
+        <button type="button" class="boton" (click)="selector.click()">Elegir imagen</button>
+      </div>
+    }
+    <input
+      #selector
+      type="file"
+      accept="image/png,image/jpeg,image/gif,image/bmp"
+      hidden
+      (change)="alElegir($event)"
+    />
+  </section>
+
+  <section class="consola" aria-labelledby="titulo-consola">
+    <header class="consola__barra">
+      <h2 id="titulo-consola">Consola</h2>
+      <span class="consola__estado" [attr.data-estado]="estado()">{{ textoEstado() }}</span>
+    </header>
+
+    <div class="consola__cuerpo" aria-live="polite">
+      @for (linea of lineas(); track $index) {
+        <p class="linea linea--{{ linea.tipo }}">
+          <span class="linea__prompt" aria-hidden="true">›</span>{{ linea.texto }}
+        </p>
+      }
+
+      @if (resultado(); as r) {
+        <div class="ficha">
+          <p class="ficha__nombre">{{ r.nombre }}</p>
+          <p class="ficha__formula" [attr.aria-label]="'Fórmula ' + r.formula">
+            @for (parte of partes(r.formula); track $index) {<span>{{ parte.elemento }}@if (parte.indice) {<sub>{{ parte.indice }}</sub>}</span>}
+          </p>
+          @if (r.iupac && r.iupac.toLowerCase() !== r.nombre.toLowerCase()) {
+            <p class="ficha__iupac"><span class="ficha__etiqueta">Nombre IUPAC</span> {{ r.iupac }}</p>
+          }
+        </div>
+
+        <ol class="espectro" aria-label="Los 3 compuestos más probables">
+          @for (p of masProbables(); track p.compuesto; let i = $index) {
+            <li class="espectro__fila" [class.espectro__fila--primera]="i === 0">
+              <span class="espectro__nombre">{{ p.nombre }}</span>
+              <span class="espectro__pista">
+                <span
+                  class="espectro__barra"
+                  [style.width.%]="anchoBarra(p.probabilidad)"
+                  [style.animation-delay.ms]="i * 70"
+                ></span>
+              </span>
+              <span class="espectro__valor">{{ porcentaje(p.probabilidad) }}</span>
+            </li>
+          }
+        </ol>
+      }
+    </div>
+  </section>
+
+  <footer class="reconoce">
+    <h2>Compuestos que reconoce @if (compuestos().length) {<span class="reconoce__cuenta">({{ compuestos().length }})</span>}</h2>
+    <ul>
+      @for (c of compuestos(); track c.clave) {
+        <li>
+          {{ c.nombre }}
+          <span class="reconoce__formula">@for (parte of partes(c.formula); track $index) {<span>{{ parte.elemento }}@if (parte.indice) {<sub>{{ parte.indice }}</sub>}</span>}</span>
+        </li>
+      } @empty {
+        <li>Arranca el backend para ver la lista.</li>
+      }
+    </ul>
+  </footer>

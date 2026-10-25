@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------
+# Todo lo que se puede regenerar o no debe redistribuirse.
+# backend/ y frontend/ tienen además sus propios .gitignore
+# (target/, node_modules/, dist/, .angular/...).
+# ---------------------------------------------------------------
+
+# Datasets generados por GenerarDataset (miles de imágenes)
+/dataset/
+/dataset_*/
+
+# Modelos entrenados: pesos de 2 a 45 MB. Se comparten mejor como "release" de GitHub
+/modelo/
+/modelo_*/
+
+# Imágenes de prueba descargadas de PubChem y Wikipedia (las de Wikipedia son CC BY-SA:
+# no las redistribuimos, se vuelven a bajar con AmpliarExamen) y las que genera EvaluarPruebas
+/pruebas/*
+# ...salvo la lista de imágenes descartadas a mano, para reconstruir el mismo examen
+!/pruebas/examen/
+/pruebas/examen/*
+!/pruebas/examen/descartadas.txt
+
+# Salidas temporales
+*.log
+
+# Herramientas locales del editor y de los asistentes
+/.claude/
+/.github/modernize/
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,246 @@
+.intro {
+  padding: 48px 0 28px;
+
+  h1 {
+    font-size: clamp(2rem, 5.4vw, 3.1rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    max-width: 60ch;
+    margin-top: 14px;
+    color: var(--grafito-suave);
+    font-size: 1.125rem;
+  }
+}
+
+.seccion h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.seccion__ayuda,
+.cargando {
+  margin-top: 4px;
+  color: var(--grafito-suave);
+}
+
+.aviso {
+  margin-top: 16px;
+  padding: 14px 16px;
+  color: var(--oxigeno);
+  background: #fff;
+  border: 1px solid var(--oxigeno);
+  border-radius: 10px;
+}
+
+.red-activa {
+  margin-top: 14px;
+  color: var(--grafito-suave);
+
+  strong {
+    color: var(--grafito);
+  }
+}
+
+// ---------- Resumen ----------
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 18px 0 0;
+  overflow: hidden;
+  background: var(--reticula);
+  border: 1px solid var(--reticula);
+  border-radius: 12px;
+
+  div {
+    padding: 12px 14px;
+    background: #fff;
+  }
+
+  dt {
+    color: var(--grafito-suave);
+    font-size: 0.8125rem;
+  }
+
+  dd {
+    margin: 2px 0 0;
+  }
+}
+
+// Los números de la red se leen como en un instrumento: monoespaciados
+.dato {
+  font-family: var(--fuente-consola);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.dato--archivo {
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+// ---------- Lista de capas ----------
+.capas {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.bloque {
+  display: grid;
+  gap: 6px;
+  padding: 10px 10px 10px 12px;
+  border: 1px dashed var(--reticula-oscura);
+  border-radius: 12px;
+}
+
+.bloque__titulo {
+  padding-left: 2px;
+  color: var(--cobalto);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.capa {
+  background: #fff;
+  border: 1px solid var(--reticula);
+  border-radius: 10px;
+
+  &[open] {
+    border-color: var(--cobalto);
+  }
+}
+
+.capa__fila {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) 130px 120px;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 8px 14px 8px 10px;
+  list-style: none;
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.capa--fija .capa__fila {
+  cursor: default;
+}
+
+.capa__texto {
+  display: grid;
+}
+
+.capa__nombre {
+  font-weight: 700;
+}
+
+.capa__detalle {
+  color: var(--grafito-suave);
+  font-size: 0.875rem;
+}
+
+.capa__salida {
+  font-family: var(--fuente-consola);
+  font-size: 0.875rem;
+}
+
+.capa__pesos {
+  display: grid;
+  font-family: var(--fuente-consola);
+  font-size: 0.875rem;
+  text-align: right;
+}
+
+.capa__parte {
+  color: var(--cobalto);
+  font-family: var(--fuente-texto);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.capa__explicacion {
+  max-width: 62ch;
+  padding: 0 16px 14px 100px;
+  color: var(--grafito-suave);
+  line-height: 1.6;
+}
+
+// ---------- Dibujo de la forma de los datos ----------
+.glifo {
+  display: grid;
+  place-items: center;
+  height: 60px;
+}
+
+.mapas {
+  position: relative;
+  display: block;
+}
+
+.mapas__hoja {
+  position: absolute;
+  background: var(--cobalto-claro);
+  border: 1.5px solid var(--cobalto);
+  border-radius: 2px;
+}
+
+.fila-datos {
+  display: block;
+  height: 8px;
+  background: var(--grafito);
+  border-radius: 2px;
+}
+
+.capa[data-tipo='densa'] .fila-datos {
+  background: var(--cobalto);
+}
+
+// La base preentrenada es una "caja" que no hemos construido nosotros: se distingue con trazo discontinuo
+.capa[data-tipo='preentrenada'] {
+  border-style: dashed;
+  border-color: var(--cobalto);
+}
+
+// ---------- Móvil ----------
+@media (max-width: 620px) {
+  .resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capa__fila {
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'glifo texto pesos'
+      'glifo salida pesos';
+    row-gap: 2px;
+  }
+
+  .glifo {
+    grid-area: glifo;
+    transform: scale(0.75);
+  }
+
+  .capa__texto {
+    grid-area: texto;
+  }
+
+  .capa__salida {
+    grid-area: salida;
+  }
+
+  .capa__pesos {
+    grid-area: pesos;
+  }
+
+  .capa__explicacion {
+    padding-left: 16px;
+  }
+}

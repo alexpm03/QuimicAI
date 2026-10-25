@@ -1,0 +1,31 @@
+clave;nombre;pubchem;iupac_es
+metanol;Metanol;methanol;metanol
+etanol;Etanol;ethanol;etanol
+acetona;Acetona;acetone;propan-2-ona
+acido_acetico;Ácido acético;acetic acid;ácido acético
+benceno;Benceno;benzene;benceno
+tolueno;Tolueno;toluene;tolueno
+fenol;Fenol;phenol;fenol
+naftaleno;Naftaleno;naphthalene;naftaleno
+glicerol;Glicerol;glycerol;propano-1,2,3-triol
+urea;Urea;urea;urea
+aspirina;Aspirina;aspirin;ácido 2-acetiloxibenzoico
+paracetamol;Paracetamol;acetaminophen;N-(4-hidroxifenil)acetamida
+ibuprofeno;Ibuprofeno;ibuprofen;ácido 2-[4-(2-metilpropil)fenil]propanoico
+cafeina;Cafeína;caffeine;1,3,7-trimetilpurina-2,6-diona
+nicotina;Nicotina;nicotine;3-[(2S)-1-metilpirrolidin-2-il]piridina
+adrenalina;Adrenalina;epinephrine;4-[(1R)-1-hidroxi-2-(metilamino)etil]benceno-1,2-diol
+dopamina;Dopamina;dopamine;4-(2-aminoetil)benceno-1,2-diol
+serotonina;Serotonina;serotonin;3-(2-aminoetil)-1H-indol-5-ol
+melatonina;Melatonina;melatonin;N-[2-(5-metoxi-1H-indol-3-il)etil]acetamida
+agomelatina;Agomelatina;agomelatine;N-[2-(7-metoxinaftalen-1-il)etil]acetamida
+glucosa;Glucosa;glucose;(3R,4S,5S,6R)-6-(hidroximetil)oxano-2,3,4,5-tetrol
+fructosa;Fructosa;fructose;(3S,4R,5R)-2-(hidroximetil)oxano-2,3,4,5-tetrol
+sacarosa;Sacarosa;sucrose;(2R,3R,4S,5S,6R)-2-[(2S,3S,4S,5R)-3,4-dihidroxi-2,5-bis(hidroximetil)oxolan-2-il]oxi-6-(hidroximetil)oxano-3,4,5-triol
+glicina;Glicina;glycine;ácido 2-aminoacético
+alanina;Alanina;alanine;ácido (2S)-2-aminopropanoico
+triptofano;Triptófano;tryptophan;ácido (2S)-2-amino-3-(1H-indol-3-il)propanoico
+colesterol;Colesterol;cholesterol;(3S,8S,9S,10R,13R,14S,17R)-10,13-dimetil-17-[(2R)-6-metilheptan-2-il]-2,3,4,7,8,9,11,12,14,15,16,17-dodecahidro-1H-ciclopenta[a]fenantren-3-ol
+vitamina_c;Vitamina C;ascorbic acid;(2R)-2-[(1S)-1,2-dihidroxietil]-3,4-dihidroxi-2H-furan-5-ona
+acido_citrico;Ácido cítrico;citric acid;ácido 2-hidroxipropano-1,2,3-tricarboxílico
+acido_lactico;Ácido láctico;lactic acid;ácido 2-hidroxipropanoico

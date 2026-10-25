@@ -1,0 +1,385 @@
+// ---------- Introducción ----------
+.intro {
+  padding: 48px 0 28px;
+
+  h1 {
+    max-width: 17ch;
+    font-size: clamp(2rem, 5.4vw, 3.1rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    margin-top: 14px;
+    color: var(--grafito-suave);
+    font-size: 1.125rem;
+  }
+}
+
+// ---------- Zona para soltar la imagen ----------
+.muestra {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+  padding: 28px;
+  background: #fff;
+  border: 2px dashed var(--reticula-oscura);
+  border-radius: 14px;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.muestra--activa {
+  background: var(--cobalto-claro);
+  border-color: var(--cobalto);
+  border-style: solid;
+}
+
+.muestra__titulo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.muestra__ayuda {
+  margin-top: 4px;
+  color: var(--grafito-suave);
+}
+
+.muestra__texto .boton {
+  margin-top: 16px;
+}
+
+.muestra__placa {
+  margin: 0;
+  width: 168px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--reticula);
+  border-radius: 8px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+// Anillo de benceno: los dobles enlaces se "dibujan" al arrastrar una imagen encima
+.anillo {
+  width: 120px;
+  height: 120px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.anillo__hexagono {
+  stroke: var(--grafito);
+  stroke-width: 3;
+  transition: stroke 0.2s;
+}
+
+.anillo__doble {
+  stroke: var(--grafito);
+  stroke-width: 3;
+  stroke-dasharray: 26;
+  transition: stroke 0.2s;
+}
+
+.muestra--activa .anillo__hexagono,
+.muestra--activa .anillo__doble {
+  stroke: var(--cobalto);
+}
+
+.muestra--activa .anillo__doble {
+  animation: dibujar-enlace 0.45s ease-out both;
+}
+
+.muestra--activa .anillo__doble:nth-of-type(3) {
+  animation-delay: 0.12s;
+}
+
+.muestra--activa .anillo__doble:nth-of-type(4) {
+  animation-delay: 0.24s;
+}
+
+@keyframes dibujar-enlace {
+  from {
+    stroke-dashoffset: 26;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+// ---------- Botones ----------
+.boton {
+  padding: 10px 18px;
+  color: #fff;
+  font-weight: 600;
+  background: var(--cobalto);
+  border: 2px solid var(--cobalto);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background: #1b37a3;
+    border-color: #1b37a3;
+  }
+}
+
+.boton--secundario {
+  color: var(--cobalto);
+  background: transparent;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+// ---------- Consola ----------
+.consola {
+  margin-top: 20px;
+  overflow: hidden;
+  color: var(--noche-texto);
+  font-family: var(--fuente-consola);
+  background: var(--noche);
+  border-radius: 14px;
+}
+
+.consola__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+
+  h2 {
+    color: var(--noche-tenue);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+}
+
+.consola__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--noche-tenue);
+  font-size: 0.8125rem;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--noche-tenue);
+  }
+
+  &[data-estado='analizando']::before {
+    background: var(--azufre);
+    animation: latido 0.9s ease-in-out infinite;
+  }
+
+  &[data-estado='listo']::before {
+    background: #8fa8ff;
+  }
+
+  &[data-estado='error']::before {
+    background: var(--oxigeno-claro);
+  }
+}
+
+@keyframes latido {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.consola__cuerpo {
+  min-height: 150px;
+  padding: 16px 18px 22px;
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+.linea {
+  display: flex;
+  gap: 10px;
+}
+
+.linea__prompt {
+  color: var(--noche-tenue);
+}
+
+.linea--ok {
+  color: #fff;
+  font-weight: 700;
+}
+
+.linea--aviso {
+  color: var(--azufre);
+}
+
+.linea--error {
+  color: var(--oxigeno-claro);
+}
+
+// Ficha del compuesto identificado: nombre y fórmula molecular
+.ficha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 18px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed rgb(255 255 255 / 12%);
+}
+
+.ficha__nombre {
+  color: #fff;
+  font-family: var(--fuente-texto);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ficha__formula {
+  color: #9db3ff;
+  font-family: var(--fuente-texto);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+
+  sub {
+    font-size: 0.62em;
+  }
+}
+
+// Los nombres IUPAC largos (sacarosa, colesterol) pueden cortarse por cualquier sitio
+.ficha__iupac {
+  flex-basis: 100%;
+  color: var(--noche-texto);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.ficha__etiqueta {
+  margin-right: 8px;
+  color: var(--noche-tenue);
+}
+
+// Ranking dibujado como las líneas de un espectro
+.espectro {
+  display: grid;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.espectro__fila {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 96px;
+  align-items: center;
+  gap: 14px;
+  color: var(--noche-tenue);
+}
+
+.espectro__fila--primera {
+  color: #fff;
+}
+
+.espectro__pista {
+  height: 10px;
+  background: rgb(255 255 255 / 6%);
+  border-radius: 2px;
+}
+
+.espectro__barra {
+  display: block;
+  height: 100%;
+  background: #4c6be0;
+  border-radius: 2px;
+  transform-origin: left;
+  animation: crecer 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.espectro__fila--primera .espectro__barra {
+  background: #9db3ff;
+}
+
+// En monoespaciada la coma decimal ocupa un carácter entero ("99, 998"): aquí usamos la fuente de texto
+.espectro__valor {
+  font-family: var(--fuente-texto);
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes crecer {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+// ---------- Compuestos que reconoce ----------
+.reconoce {
+  margin-top: 36px;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--grafito-suave);
+  }
+}
+
+.reconoce__formula {
+  color: var(--grafito);
+
+  sub {
+    font-size: 0.7em;
+  }
+}
+
+// ---------- Móvil ----------
+@media (max-width: 560px) {
+  .intro {
+    padding-top: 36px;
+  }
+
+  .muestra {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 22px;
+  }
+
+  .anillo {
+    width: 84px;
+    height: 84px;
+  }
+
+  .muestra__placa {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .espectro__fila {
+    grid-template-columns: 104px minmax(0, 1fr) 76px;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,119 @@
+<section class="intro">
+  <h1>Laboratorio</h1>
+  <p>Mira por dentro la red neuronal que usa el portal: cómo está construida y qué hace cada una de sus capas.</p>
+</section>
+
+<section class="seccion" aria-labelledby="titulo-arquitectura">
+  <h2 id="titulo-arquitectura">Arquitectura</h2>
+  <p class="seccion__ayuda">Leída del modelo que tiene cargado el backend. Pulsa una capa para ver qué hace.</p>
+
+  @if (error()) {
+    <p class="aviso">{{ error() }}</p>
+  } @else if (arquitectura(); as a) {
+    <p class="red-activa">
+      @if (a.red === 'resnet18') {
+        <strong>ResNet18 preentrenada</strong> con ImageNet y ajustada a nuestros compuestos (transfer learning).
+      } @else {
+        <strong>Red propia</strong>, diseñada capa a capa y entrenada desde cero con nuestros dibujos.
+      }
+    </p>
+
+    <dl class="resumen">
+      <div>
+        <dt>Entrada</dt>
+        <dd class="dato">{{ forma(a.entrada) }}</dd>
+      </div>
+      <div>
+        <dt>Compuestos</dt>
+        <dd class="dato">{{ a.clases }}</dd>
+      </div>
+      <div>
+        <dt>Pesos que aprende</dt>
+        <dd class="dato">{{ numero(a.pesosTotales) }}</dd>
+      </div>
+      <div>
+        <dt>Archivo</dt>
+        <dd class="dato dato--archivo">{{ a.archivo || '—' }}</dd>
+      </div>
+    </dl>
+
+    <div class="capas">
+      <div class="capa capa--fija">
+        <div class="capa__fila">
+          <span class="glifo" aria-hidden="true">
+            <ng-container *ngTemplateOutlet="dibujo; context: { $implicit: glifo(a.entrada) }" />
+          </span>
+          <span class="capa__texto">
+            <span class="capa__nombre">Imagen de entrada</span>
+            <span class="capa__detalle">ya limpia, recortada e invertida</span>
+          </span>
+          <span class="capa__salida">{{ forma(a.entrada) }}</span>
+          <span class="capa__pesos">—</span>
+        </div>
+      </div>
+
+      @for (grupo of grupos(); track $index) {
+        @if (grupo.bloque > 0) {
+          <div class="bloque">
+            <p class="bloque__titulo">Bloque convolucional {{ grupo.bloque }}</p>
+            @for (capa of grupo.capas; track $index) {
+              <ng-container *ngTemplateOutlet="fila; context: { $implicit: capa }" />
+            }
+          </div>
+        } @else {
+          @for (capa of grupo.capas; track $index) {
+            <ng-container *ngTemplateOutlet="fila; context: { $implicit: capa }" />
+          }
+        }
+      }
+
+      <div class="capa capa--fija">
+        <div class="capa__fila">
+          <span class="glifo" aria-hidden="true"></span>
+          <span class="capa__texto">
+            <span class="capa__nombre">Softmax</span>
+            <span class="capa__detalle">notas → probabilidades que suman 100 %</span>
+          </span>
+          <span class="capa__salida">{{ a.clases }}</span>
+          <span class="capa__pesos">—</span>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <p class="cargando">Leyendo la red…</p>
+  }
+</section>
+
+<ng-template #fila let-capa>
+  <details class="capa" [attr.data-tipo]="capa.tipo">
+    <summary class="capa__fila">
+      <span class="glifo" aria-hidden="true">
+        <ng-container *ngTemplateOutlet="dibujo; context: { $implicit: glifo(capa.salida) }" />
+      </span>
+      <span class="capa__texto">
+        <span class="capa__nombre">{{ capa.nombre }}</span>
+        <span class="capa__detalle">{{ capa.detalle }}</span>
+      </span>
+      <span class="capa__salida">{{ forma(capa.salida) }}</span>
+      <span class="capa__pesos">
+        {{ capa.pesos ? numero(capa.pesos) : '—' }}
+        @if (parteDelTotal(capa.pesos)) {
+          <span class="capa__parte">{{ parteDelTotal(capa.pesos) }}</span>
+        }
+      </span>
+    </summary>
+    <p class="capa__explicacion">{{ capa.explicacion }}</p>
+  </details>
+</ng-template>
+
+<ng-template #dibujo let-g>
+  @if (g.tipo === 'mapas') {
+    <span class="mapas" [style.width.px]="g.lado + g.capas.length * 4" [style.height.px]="g.lado + g.capas.length * 4">
+      @for (i of g.capas; track i) {
+        <span class="mapas__hoja" [style.width.px]="g.lado" [style.height.px]="g.lado" [style.left.px]="i * 4" [style.top.px]="(g.capas.length - 1 - i) * 4"></span>
+      }
+    </span>
+  } @else {
+    <span class="fila-datos" [style.width.px]="g.ancho"></span>
+  }
+</ng-template>

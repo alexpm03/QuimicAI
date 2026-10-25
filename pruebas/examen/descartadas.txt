@@ -1,0 +1,20 @@
+# Imágenes de Wikipedia descartadas a mano (fotos, modelos 3D o diagramas con medidas).
+# AmpliarExamen no las vuelve a descargar.
+acido_acetico/wiki_en
+aspirina/wiki_en
+etanol/wiki_en
+fenol/wiki_es
+fructosa/wiki_es
+glicerol/wiki_es
+metanol/wiki_en
+tolueno/wiki_en
+urea/wiki_es
+acido_citrico/wiki_es
+acido_lactico/wiki_es
+benceno/wiki_es
+dopamina/wiki_es
+ibuprofeno/wiki_es
+naftaleno/wiki_en
+paracetamol/wiki_es
+triptofano/wiki_en
+acetona/wiki_en

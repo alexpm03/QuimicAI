@@ -1,0 +1,58 @@
+.pagina {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+// ---------- Cabecera ----------
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--reticula-oscura);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--grafito);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.marca__icono {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--cobalto);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+// La página activa se marca con un subrayado cobalto, como un enlace "encendido"
+.navegacion {
+  display: flex;
+  gap: 20px;
+
+  a {
+    padding: 4px 0;
+    color: var(--grafito-suave);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: var(--grafito);
+    }
+
+    &.activo {
+      color: var(--cobalto);
+      border-bottom-color: var(--cobalto);
+    }
+  }
+}

@@ -1,0 +1,31 @@
+clave;nombre;cid;formula;smiles;iupac_en;iupac_es
+metanol;Metanol;887;CH4O;CO;methanol;metanol
+etanol;Etanol;702;C2H6O;CCO;ethanol;etanol
+acetona;Acetona;180;C3H6O;CC(=O)C;propan-2-one;propan-2-ona
+acido_acetico;Ácido acético;176;C2H4O2;CC(=O)O;acetic acid;ácido acético
+benceno;Benceno;241;C6H6;C1=CC=CC=C1;benzene;benceno
+tolueno;Tolueno;1140;C7H8;CC1=CC=CC=C1;toluene;tolueno
+fenol;Fenol;996;C6H6O;C1=CC=C(C=C1)O;phenol;fenol
+naftaleno;Naftaleno;931;C10H8;C1=CC=C2C=CC=CC2=C1;naphthalene;naftaleno
+glicerol;Glicerol;753;C3H8O3;C(C(CO)O)O;propane-1,2,3-triol;propano-1,2,3-triol
+urea;Urea;1176;CH4N2O;C(=O)(N)N;urea;urea
+aspirina;Aspirina;2244;C9H8O4;CC(=O)OC1=CC=CC=C1C(=O)O;2-acetyloxybenzoic acid;ácido 2-acetiloxibenzoico
+paracetamol;Paracetamol;1983;C8H9NO2;CC(=O)NC1=CC=C(C=C1)O;N-(4-hydroxyphenyl)acetamide;N-(4-hidroxifenil)acetamida
+ibuprofeno;Ibuprofeno;3672;C13H18O2;CC(C)CC1=CC=C(C=C1)C(C)C(=O)O;2-[4-(2-methylpropyl)phenyl]propanoic acid;ácido 2-[4-(2-metilpropil)fenil]propanoico
+cafeina;Cafeína;2519;C8H10N4O2;CN1C=NC2=C1C(=O)N(C(=O)N2C)C;1,3,7-trimethylpurine-2,6-dione;1,3,7-trimetilpurina-2,6-diona
+nicotina;Nicotina;89594;C10H14N2;CN1CCC[C@H]1C2=CN=CC=C2;3-[(2S)-1-methylpyrrolidin-2-yl]pyridine;3-[(2S)-1-metilpirrolidin-2-il]piridina
+adrenalina;Adrenalina;5816;C9H13NO3;CNC[C@@H](C1=CC(=C(C=C1)O)O)O;4-[(1R)-1-hydroxy-2-(methylamino)ethyl]benzene-1,2-diol;4-[(1R)-1-hidroxi-2-(metilamino)etil]benceno-1,2-diol
+dopamina;Dopamina;681;C8H11NO2;C1=CC(=C(C=C1CCN)O)O;4-(2-aminoethyl)benzene-1,2-diol;4-(2-aminoetil)benceno-1,2-diol
+serotonina;Serotonina;5202;C10H12N2O;C1=CC2=C(C=C1O)C(=CN2)CCN;3-(2-aminoethyl)-1H-indol-5-ol;3-(2-aminoetil)-1H-indol-5-ol
+melatonina;Melatonina;896;C13H16N2O2;CC(=O)NCCC1=CNC2=C1C=C(C=C2)OC;N-[2-(5-methoxy-1H-indol-3-yl)ethyl]acetamide;N-[2-(5-metoxi-1H-indol-3-il)etil]acetamida
+agomelatina;Agomelatina;82148;C15H17NO2;CC(=O)NCCC1=CC=CC2=C1C=C(C=C2)OC;N-[2-(7-methoxynaphthalen-1-yl)ethyl]acetamide;N-[2-(7-metoxinaftalen-1-il)etil]acetamida
+glucosa;Glucosa;5793;C6H12O6;C([C@@H]1[C@H]([C@@H]([C@H](C(O1)O)O)O)O)O;(3R,4S,5S,6R)-6-(hydroxymethyl)oxane-2,3,4,5-tetrol;(3R,4S,5S,6R)-6-(hidroximetil)oxano-2,3,4,5-tetrol
+fructosa;Fructosa;2723872;C6H12O6;C1[C@H]([C@H]([C@@H](C(O1)(CO)O)O)O)O;(3S,4R,5R)-2-(hydroxymethyl)oxane-2,3,4,5-tetrol;(3S,4R,5R)-2-(hidroximetil)oxano-2,3,4,5-tetrol
+sacarosa;Sacarosa;5988;C12H22O11;C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)O[C@]2([C@H]([C@@H]([C@H](O2)CO)O)O)CO)O)O)O)O;(2R,3R,4S,5S,6R)-2-[(2S,3S,4S,5R)-3,4-dihydroxy-2,5-bis(hydroxymethyl)oxolan-2-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol;(2R,3R,4S,5S,6R)-2-[(2S,3S,4S,5R)-3,4-dihidroxi-2,5-bis(hidroximetil)oxolan-2-il]oxi-6-(hidroximetil)oxano-3,4,5-triol
+glicina;Glicina;750;C2H5NO2;C(C(=O)O)N;2-aminoacetic acid;ácido 2-aminoacético
+alanina;Alanina;5950;C3H7NO2;C[C@@H](C(=O)O)N;(2S)-2-aminopropanoic acid;ácido (2S)-2-aminopropanoico
+triptofano;Triptófano;6305;C11H12N2O2;C1=CC=C2C(=C1)C(=CN2)C[C@@H](C(=O)O)N;(2S)-2-amino-3-(1H-indol-3-yl)propanoic acid;ácido (2S)-2-amino-3-(1H-indol-3-il)propanoico
+colesterol;Colesterol;5997;C27H46O;C[C@H](CCCC(C)C)[C@H]1CC[C@@H]2[C@@]1(CC[C@H]3[C@H]2CC=C4[C@@]3(CC[C@@H](C4)O)C)C;(3S,8S,9S,10R,13R,14S,17R)-10,13-dimethyl-17-[(2R)-6-methylheptan-2-yl]-2,3,4,7,8,9,11,12,14,15,16,17-dodecahydro-1H-cyclopenta[a]phenanthren-3-ol;(3S,8S,9S,10R,13R,14S,17R)-10,13-dimetil-17-[(2R)-6-metilheptan-2-il]-2,3,4,7,8,9,11,12,14,15,16,17-dodecahidro-1H-ciclopenta[a]fenantren-3-ol
+vitamina_c;Vitamina C;54670067;C6H8O6;C([C@@H]([C@@H]1C(=C(C(=O)O1)O)O)O)O;(2R)-2-[(1S)-1,2-dihydroxyethyl]-3,4-dihydroxy-2H-furan-5-one;(2R)-2-[(1S)-1,2-dihidroxietil]-3,4-dihidroxi-2H-furan-5-ona
+acido_citrico;Ácido cítrico;311;C6H8O7;C(C(=O)O)C(CC(=O)O)(C(=O)O)O;2-hydroxypropane-1,2,3-tricarboxylic acid;ácido 2-hidroxipropano-1,2,3-tricarboxílico
+acido_lactico;Ácido láctico;612;C3H6O3;CC(C(=O)O)O;2-hydroxypropanoic acid;ácido 2-hidroxipropanoico

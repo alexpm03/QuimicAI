@@ -1,0 +1,16 @@
+<main class="pagina">
+  <header class="cabecera">
+    <a class="marca" routerLink="/">
+      <svg class="marca__icono" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.5 20.2 7.25v9.5L12 21.5 3.8 16.75v-9.5Z" />
+      </svg>
+      Moléculas
+    </a>
+    <nav class="navegacion" aria-label="Secciones">
+      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Identificar</a>
+      <a routerLink="/laboratorio" routerLinkActive="activo">Laboratorio</a>
+    </nav>
+  </header>
+
+  <router-outlet />
+</main>
