@@ -18,3 +18,9 @@ naftaleno/wiki_en
 paracetamol/wiki_es
 triptofano/wiki_en
 acetona/wiki_en
+# Revisión del 27/10/2026: no son fórmulas 2D planas como las que aprende la red
+tolueno/wiki_es
+glucosa/wiki_en
+glucosa/wiki_es
+sacarosa/wiki_es
+glicina/wiki_es

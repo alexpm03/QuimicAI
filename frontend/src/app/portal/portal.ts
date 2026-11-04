@@ -141,9 +141,31 @@ export class Portal implements OnDestroy {
             { tipo: 'aviso', texto: 'Prueba con un dibujo más limpio, sin sombras ni texto alrededor.' },
           ];
 
-    this.lineas.update((lineas) => [...lineas, ...conclusion]);
+    this.lineas.update((lineas) => [...lineas, ...this.explicarLetras(respuesta), ...conclusion]);
     this.resultado.set(respuesta);
     this.estado.set('listo');
+  }
+
+  /** Qué letras ha leído el lector y, si ha corregido a la red, qué decía ella sola. */
+  private explicarLetras(respuesta: Prediccion): Linea[] {
+    const letras = respuesta.letras;
+    if (!letras) {
+      return [];
+    }
+    const leidas = [
+      letras.oxigenos ? `${letras.oxigenos} O` : '',
+      letras.nitrogenos ? `${letras.nitrogenos} N` : '',
+    ].filter(Boolean);
+    const lineas: Linea[] = [
+      { tipo: 'info', texto: leidas.length ? `Letras leídas: ${leidas.join(' y ')}.` : 'No he leído ninguna O ni N.' },
+    ];
+    if (letras.redDecia) {
+      lineas.push({
+        tipo: 'info',
+        texto: `Por la forma parecía ${letras.redDecia.toLowerCase()}, pero sus letras no encajan.`,
+      });
+    }
+    return lineas;
   }
 
   private fallo(mensaje: string): void {

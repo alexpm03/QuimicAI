@@ -11,6 +11,8 @@ export interface Prediccion {
   iupac: string;
   confianza: number;
   ranking: { compuesto: string; nombre: string; probabilidad: number }[];
+  /** O y N leídas en la imagen por el lector de letras; null si el backend no tiene lector */
+  letras: { oxigenos: number; nitrogenos: number; redDecia: string | null } | null;
 }
 
 /** Cada compuesto que reconoce el modelo, según GET /api/compuestos. */

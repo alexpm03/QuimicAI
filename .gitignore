@@ -11,6 +11,8 @@
 # Modelos entrenados: pesos de 2 a 45 MB. Se comparten mejor como "release" de GitHub
 /modelo/
 /modelo_*/
+# Entrenamientos repetidos para medir cuánto es azar (Entrenar salida=../repes/...)
+/repes/
 
 # Imágenes de prueba descargadas de PubChem y Wikipedia (las de Wikipedia son CC BY-SA:
 # no las redistribuimos, se vuelven a bajar con AmpliarExamen) y las que genera EvaluarPruebas

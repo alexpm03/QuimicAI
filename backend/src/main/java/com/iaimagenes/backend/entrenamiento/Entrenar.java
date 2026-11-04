@@ -4,9 +4,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import ai.djl.Model;
+import ai.djl.engine.Engine;
 import ai.djl.basicdataset.cv.classification.ImageFolder;
 import ai.djl.modality.cv.transform.ToTensor;
 import ai.djl.ndarray.types.Shape;
@@ -41,14 +43,31 @@ public class Entrenar {
      *       Entrenar continuar          -> red propia, partiendo del modelo guardado en ../modelo
      *       Entrenar resnet             -> ResNet18 preentrenada (128 px), con ../dataset_128
      *       Entrenar resnet continuar   -> ResNet18, partiendo del modelo guardado en ../modelo
+     * Con salida=carpeta se guarda (y se continúa) en esa carpeta en vez de en ../modelo:
+     * sirve para entrenar varias veces lo mismo sin pisar el modelo que usa el portal.
      */
     public static void main(String[] args) throws Exception {
         List<String> opciones = List.of(args);
         ConfigModelo red = opciones.contains("resnet") ? ConfigModelo.RESNET18 : ConfigModelo.PROPIA;
         boolean continuar = opciones.contains("continuar");
         Path dataset = red.carpetaDataset();
-        Path carpetaModelo = Path.of("../modelo");
+        Path carpetaModelo = Path.of(opciones.stream()
+                .filter(o -> o.startsWith("salida="))
+                .map(o -> o.substring("salida=".length()))
+                .findFirst()
+                .orElse("../modelo"));
         System.out.println("Red: " + red.arquitectura() + " a " + red.tamano() + " px, dataset " + dataset);
+
+        // La semilla decide los pesos iniciales, el orden de las imágenes y el dropout. Sin semilla=N
+        // se elige una al azar, así dos entrenamientos iguales dan resultados distintos y se puede medir
+        // cuánto es azar; con semilla=N se repite exactamente un entrenamiento anterior.
+        int semilla = opciones.stream()
+                .filter(o -> o.startsWith("semilla="))
+                .map(o -> Integer.parseInt(o.substring("semilla=".length())))
+                .findFirst()
+                .orElse(new Random().nextInt(1_000_000));
+        Engine.getInstance().setRandomSeed(semilla);
+        System.out.println("Semilla: " + semilla + ". Modelo en " + carpetaModelo.toAbsolutePath().normalize());
 
         ImageFolder train = cargar(dataset.resolve("train"), true, red);
         ImageFolder test = cargar(dataset.resolve("test"), false, red);
