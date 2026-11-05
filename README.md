@@ -96,6 +96,12 @@ pruebas/     examen con imágenes reales (se descarga; no está en el repositori
 
 No hace falta instalar Maven: el backend trae su propio `mvnw`.
 
+## Probarlo sin entrenar
+
+En [Releases](https://github.com/alexpm03/QuimicAI/releases) está `modelos.zip` con la ResNet18 entrenada y el
+lector de letras. Descomprímelo en la raíz del proyecto (quedan las carpetas `modelo/` y `modelo_lector/`),
+descarga los datos de los compuestos (paso 1 de abajo) y arranca el backend y el portal (pasos 6 y siguientes).
+
 ## Puesta en marcha (Windows, cmd, desde `backend\`)
 
 Los datasets, los modelos y las imágenes de prueba no están en el repositorio: se generan así.

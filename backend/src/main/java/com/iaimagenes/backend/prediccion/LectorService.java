@@ -21,8 +21,11 @@ public class LectorService implements AutoCloseable {
 
     private static final Logger log = LoggerFactory.getLogger(LectorService.class);
 
-    /** La predicción final y lo que leyó el lector (null si no hay lector). */
-    public record Corregida(Prediccion prediccion, LectorLetras.Resultado letras) {}
+    /**
+     * La predicción final y lo que leyó el lector (null si no hay lector). desconocida es true si ninguna
+     * molécula de la lista tiene esas O y N: seguramente la imagen es de una molécula que no conocemos.
+     */
+    public record Corregida(Prediccion prediccion, LectorLetras.Resultado letras, boolean desconocida) {}
 
     private final LectorLetras lector;
     private final CombinadorLetras combinador;
@@ -43,10 +46,10 @@ public class LectorService implements AutoCloseable {
 
     public Corregida corregir(Prediccion red, BufferedImage imagen) throws Exception {
         if (lector == null) {
-            return new Corregida(red, null);
+            return new Corregida(red, null, false);
         }
         LectorLetras.Resultado letras = lector.leerImagen(imagen);
-        return new Corregida(combinador.reordenar(red, letras), letras);
+        return new Corregida(combinador.reordenar(red, letras), letras, !combinador.algunoEncaja(letras));
     }
 
     @Override

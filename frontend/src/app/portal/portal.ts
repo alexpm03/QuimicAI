@@ -133,8 +133,12 @@ export class Portal implements OnDestroy {
   private mostrar(respuesta: Prediccion): void {
     const nombre = respuesta.nombre.toLowerCase();
     const confianza = formatearPorcentaje(respuesta.confianza);
-    const conclusion: Linea[] =
-      respuesta.confianza >= CONFIANZA_MINIMA
+    const conclusion: Linea[] = respuesta.letras?.desconocida
+      ? [
+          { tipo: 'aviso', texto: 'Ninguna de las moléculas que conozco tiene esas letras: seguramente no está en mi lista.' },
+          { tipo: 'aviso', texto: `De las que conozco, la más parecida es ${nombre}.` },
+        ]
+      : respuesta.confianza >= CONFIANZA_MINIMA
         ? [{ tipo: 'ok', texto: `Es ${nombre} con un ${confianza} de confianza.` }]
         : [
             { tipo: 'aviso', texto: `Resultado dudoso: se parece más a ${nombre}, pero solo con un ${confianza}.` },

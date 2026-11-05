@@ -1,12 +1,8 @@
 package com.iaimagenes.backend.prediccion;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.iaimagenes.backend.entrenamiento.Preprocesado;
 
 @RestController
 @RequestMapping("/api")
@@ -32,8 +26,11 @@ public class PrediccionController {
 
         public record Opcion(String compuesto, String nombre, double probabilidad) {}
 
-        /** O y N leídas en la imagen; redDecia es el nombre que daba la red sola si el lector lo cambió. */
-        public record Letras(int oxigenos, int nitrogenos, String redDecia) {}
+        /**
+         * O y N leídas en la imagen; redDecia es el nombre que daba la red sola si el lector lo cambió;
+         * desconocida, que ninguna molécula de la lista tiene esas letras.
+         */
+        public record Letras(int oxigenos, int nitrogenos, String redDecia, boolean desconocida) {}
     }
 
     private final ClasificadorService clasificador;
@@ -51,13 +48,8 @@ public class PrediccionController {
         if (imagen.isEmpty()) {
             throw new IllegalArgumentException("No se ha enviado ninguna imagen.");
         }
-        byte[] datos = imagen.getBytes();
-        Prediccion red;
-        try (InputStream entrada = new ByteArrayInputStream(datos)) {
-            red = clasificador.clasificar(entrada);
-        }
-        // clasificar() ya ha comprobado que es una imagen legible
-        BufferedImage original = Preprocesado.aplanarSobreBlanco(ImageIO.read(new ByteArrayInputStream(datos)));
+        BufferedImage original = LecturaImagen.leer(imagen.getBytes());
+        Prediccion red = clasificador.clasificar(original);
         LectorService.Corregida corregida = lector.corregir(red, original);
         Prediccion prediccion = corregida.prediccion();
 
@@ -65,7 +57,8 @@ public class PrediccionController {
         if (corregida.letras() != null) {
             String redDecia = red.compuesto().equals(prediccion.compuesto()) ? null
                     : catalogo.buscar(red.compuesto()).nombre();
-            letras = new Respuesta.Letras(corregida.letras().oxigenos(), corregida.letras().nitrogenos(), redDecia);
+            letras = new Respuesta.Letras(corregida.letras().oxigenos(), corregida.letras().nitrogenos(), redDecia,
+                    corregida.desconocida());
         }
 
         CatalogoCompuestos.Compuesto mejor = catalogo.buscar(prediccion.compuesto());

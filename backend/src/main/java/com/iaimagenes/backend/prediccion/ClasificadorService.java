@@ -52,13 +52,18 @@ public class ClasificadorService implements AutoCloseable {
         return config;
     }
 
+    /** Para imágenes de confianza (el examen): las abre tal cual. El portal usa LecturaImagen. */
     public Prediccion clasificar(InputStream entrada) throws IOException, TranslateException {
         BufferedImage original = ImageIO.read(entrada);
         if (original == null) {
             throw new IllegalArgumentException("El archivo no es una imagen que se pueda leer.");
         }
+        return clasificar(Preprocesado.aplanarSobreBlanco(original));
+    }
 
-        Image imagen = ImageFactory.getInstance().fromImage(Preprocesado.aplanarSobreBlanco(original));
+    /** Clasifica una imagen ya abierta y con el fondo transparente pasado a blanco. */
+    public Prediccion clasificar(BufferedImage aplanada) throws TranslateException {
+        Image imagen = ImageFactory.getInstance().fromImage(aplanada);
 
         try (Predictor<Image, Classifications> predictor = model.newPredictor(translator)) {
             Classifications resultado = predictor.predict(imagen);

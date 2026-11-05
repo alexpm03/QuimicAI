@@ -42,13 +42,25 @@ public final class CombinadorLetras {
         letrasPorCompuesto = letrasPorCompuesto(compuestosCsv);
     }
 
+    /** Cuántas O y N le sobran o le faltan al compuesto respecto a lo leído (0 = encaja). */
+    public int diferencia(String compuesto, LectorLetras.Resultado leidas) {
+        int[] esperadas = letrasPorCompuesto.getOrDefault(compuesto, new int[2]);
+        return Math.abs(esperadas[0] - leidas.oxigenos()) + Math.abs(esperadas[1] - leidas.nitrogenos());
+    }
+
+    /**
+     * ¿Hay algún compuesto de la lista con exactamente esas O y N? Si no, lo más probable es que la imagen
+     * sea de una molécula que el modelo no conoce (la red siempre responde una de su lista, aunque no sea).
+     */
+    public boolean algunoEncaja(LectorLetras.Resultado leidas) {
+        return letrasPorCompuesto.keySet().stream().anyMatch(c -> diferencia(c, leidas) == 0);
+    }
+
     public Prediccion reordenar(Prediccion red, LectorLetras.Resultado leidas) {
         List<Probabilidad> ajustadas = new ArrayList<>();
         double suma = 0;
         for (Probabilidad p : red.ranking()) {
-            int[] esperadas = letrasPorCompuesto.getOrDefault(p.compuesto(), new int[2]);
-            int diferencia = Math.abs(esperadas[0] - leidas.oxigenos()) + Math.abs(esperadas[1] - leidas.nitrogenos());
-            double ajustada = p.probabilidad() * Math.pow(CASTIGO_POR_LETRA, diferencia);
+            double ajustada = p.probabilidad() * Math.pow(CASTIGO_POR_LETRA, diferencia(p.compuesto(), leidas));
             ajustadas.add(new Probabilidad(p.compuesto(), ajustada));
             suma += ajustada;
         }

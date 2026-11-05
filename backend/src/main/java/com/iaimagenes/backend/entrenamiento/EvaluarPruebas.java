@@ -59,6 +59,7 @@ public class EvaluarPruebas {
         List<AnalizadorFallos.Resultado> resultados = new ArrayList<>();
         String red;
         int cambiadasPorLector = 0;
+        int falsasAlarmas = 0;
         try (ClasificadorService clasificador = new ClasificadorService(carpetaModelo);
                 LectorLetras lector = carpetaLector == null ? null : new LectorLetras(Path.of(carpetaLector));
                 NDManager manager = NDManager.newBaseManager()) {
@@ -74,7 +75,12 @@ public class EvaluarPruebas {
 
                 BufferedImage original = Preprocesado.aplanarSobreBlanco(ImageIO.read(caso.imagen().toFile()));
                 if (lector != null) {
-                    Prediccion corregida = combinador.reordenar(prediccion, lector.leerImagen(original));
+                    LectorLetras.Resultado letras = lector.leerImagen(original);
+                    if (!combinador.algunoEncaja(letras)) {
+                        // Todas las moléculas del examen están en la lista: cada aviso es una falsa alarma
+                        falsasAlarmas++;
+                    }
+                    Prediccion corregida = combinador.reordenar(prediccion, letras);
                     if (!corregida.compuesto().equals(prediccion.compuesto())) {
                         cambiadasPorLector++;
                     }
@@ -104,6 +110,7 @@ public class EvaluarPruebas {
         System.out.printf("%nAciertos: %d de %d (%.1f %%)%n", aciertos, casos.size(), 100.0 * aciertos / casos.size());
         if (carpetaLector != null) {
             System.out.println("El lector de letras cambió la respuesta de la red en " + cambiadasPorLector + " imágenes.");
+            System.out.println("Avisos de \"no está en mi lista\" (falsas alarmas, todas lo están): " + falsasAlarmas);
         }
         System.out.println("Lo que ve la red, en " + carpetaVista.toAbsolutePath().normalize());
 
